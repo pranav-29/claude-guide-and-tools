@@ -21,15 +21,21 @@ When asked to install this repo, do **all** of the following, in order:
    npm install -g ui-ux-pro-max-cli
    uipro init --ai claude --global
    ```
-3. **Ask the user in chat** for their magic (21st.dev) API key. Do **NOT** create
+3. **Install `graphify`** (CLI + skill, no key needed):
+   ```bash
+   uv tool install graphifyy   # or: pipx install graphifyy / pip install graphifyy
+   graphify install
+   ```
+4. **Ask the user in chat** for their magic (21st.dev) API key. Do **NOT** create
    a `.env` file. Do **NOT** offer to store it in a file. Wait for their reply.
-4. **Add the `magic` MCP server** with the key they pasted (inline only):
+5. **Add the `magic` MCP server** with the key they pasted (inline only):
    ```bash
    claude mcp add magic --scope user --env API_KEY="<KEY_FROM_CHAT>" -- npx -y @21st-dev/magic@latest
    ```
-5. **Verify:** `claude mcp list`
-6. **Delete the temp clone:** `rm -rf ~/.claude/tmp/frontend-tools-install`
-7. Tell the user both tools are installed and the temp clone was removed.
+6. **Verify:** `claude mcp list`
+7. **Delete the temp clone:** `rm -rf ~/.claude/tmp/frontend-tools-install`
+8. Tell the user all tools are installed, then **ask which folder to graph** and
+   run `/graphify <path>` on it (or let them skip).
 
 (Full details: [`INSTALL.md`](./INSTALL.md).)
 
@@ -40,6 +46,7 @@ When asked to install this repo, do **all** of the following, in order:
 | Tool | What it is | How it's installed |
 |------|-----------|--------------------|
 | [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | A Claude Code skill providing UI/UX design intelligence | `ui-ux-pro-max-cli` → `uipro init --ai claude --global` |
+| [graphify](https://github.com/safishamsi/graphify) | CLI + Claude Code skill that turns a codebase into a queryable knowledge graph | `uv tool install graphifyy` → `graphify install` |
 | [magic](https://github.com/21st-dev/magic-mcp) | 21st.dev Magic MCP server for generating UI components | `claude mcp add magic ... npx @21st-dev/magic@latest` |
 
 ## Manual install (optional)

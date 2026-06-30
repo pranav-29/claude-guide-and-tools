@@ -19,8 +19,21 @@ Write-Host "==> Installing ui-ux-pro-max skill (global, Claude Code)"
 npm install -g ui-ux-pro-max-cli
 uipro init --ai claude --global
 
-# --- 2. magic MCP server --------------------------------------------------
+# --- 2. graphify (CLI + skill) -------------------------------------------
+Write-Host "==> Installing graphify (CLI + Claude Code skill)"
+if (Get-Command uv -ErrorAction SilentlyContinue) {
+    uv tool install graphifyy
+} elseif (Get-Command pipx -ErrorAction SilentlyContinue) {
+    pipx install graphifyy
+} else {
+    pip install graphifyy
+}
+graphify install
+
+# --- 3. magic MCP server --------------------------------------------------
 Write-Host "==> Adding the 'magic' MCP server to Claude Code (user scope)"
 claude mcp add magic --scope user --env API_KEY="$env:MAGIC_API_KEY" -- npx -y "@21st-dev/magic@latest"
 
 Write-Host "==> Done. Tools installed."
+
+Write-Host "==> Tip: graphify is installed. Run '/graphify .' inside a project to build its graph."
