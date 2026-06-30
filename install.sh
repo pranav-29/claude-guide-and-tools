@@ -1,18 +1,10 @@
 #!/usr/bin/env bash
-# Auto-installer for frontend tools/skills (macOS / Linux / Git Bash)
+# Manual installer for frontend tools/skills (macOS / Linux / Git Bash)
+# Prompts for the magic API key in the terminal. No .env file is created.
 set -euo pipefail
 
-cd "$(dirname "$0")"
-
-# --- Get the API key ------------------------------------------------------
-# Priority: existing env var > .env file > interactive prompt.
-if [ -f .env ]; then
-  set -a
-  . ./.env
-  set +a
-fi
-
-if [ -z "${MAGIC_API_KEY:-}" ] || [ "$MAGIC_API_KEY" = "your-magic-api-key-here" ]; then
+# --- Get the API key (prompt only) ---------------------------------------
+if [ -z "${MAGIC_API_KEY:-}" ]; then
   printf "Enter your magic (21st.dev) API key: "
   read -r MAGIC_API_KEY
 fi

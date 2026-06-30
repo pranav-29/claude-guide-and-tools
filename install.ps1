@@ -1,21 +1,9 @@
-# Auto-installer for frontend tools/skills (Windows / PowerShell)
+# Manual installer for frontend tools/skills (Windows / PowerShell)
+# Prompts for the magic API key in the terminal. No .env file is created.
 $ErrorActionPreference = "Stop"
 
-Set-Location $PSScriptRoot
-
-# --- Get the API key ------------------------------------------------------
-# Priority: existing env var > .env file > interactive prompt.
-if (Test-Path ".env") {
-    Get-Content ".env" | ForEach-Object {
-        $line = $_.Trim()
-        if ($line -and -not $line.StartsWith("#") -and $line.Contains("=")) {
-            $name, $value = $line -split "=", 2
-            Set-Item -Path "Env:$($name.Trim())" -Value $value.Trim()
-        }
-    }
-}
-
-if (-not $env:MAGIC_API_KEY -or $env:MAGIC_API_KEY -eq "your-magic-api-key-here") {
+# --- Get the API key (prompt only) ---------------------------------------
+if (-not $env:MAGIC_API_KEY) {
     $env:MAGIC_API_KEY = Read-Host "Enter your magic (21st.dev) API key"
 }
 

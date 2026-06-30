@@ -1,11 +1,37 @@
 # Frontend Tools / Skills Installer
 
-Automatically installs the frontend tooling I use with Claude Code:
+Installs the frontend tooling I use with Claude Code:
 
 | Tool | What it is | How it's installed |
 |------|-----------|--------------------|
 | [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | A Claude Code skill providing UI/UX design intelligence | `ui-ux-pro-max-cli` → `uipro init --ai claude --global` |
 | [magic](https://github.com/21st-dev/magic-mcp) | 21st.dev Magic MCP server for generating UI components | `claude mcp add magic ... npx @21st-dev/magic@latest` |
+
+## Recommended: let Claude install it
+
+Just give Claude this repo link and say **"install the tools from this repo."**
+Claude follows [`INSTALL.md`](./INSTALL.md), which makes it:
+
+1. Temp-clone this repo into `~/.claude/tmp/frontend-tools-install`.
+2. Install the `ui-ux-pro-max` skill globally.
+3. **Ask you for the magic API key in chat** (no `.env` file is created).
+4. Add the `magic` MCP server using that key.
+5. Delete the temp clone when done.
+
+## Manual install (optional)
+
+Both scripts **prompt for the API key** in the terminal — no file editing, no `.env`.
+
+```powershell
+# Windows
+./install.ps1
+```
+
+```bash
+# macOS / Linux / Git Bash
+chmod +x install.sh
+./install.sh
+```
 
 ## Prerequisites
 
@@ -13,41 +39,5 @@ Automatically installs the frontend tooling I use with Claude Code:
 - [Claude Code](https://claude.com/claude-code) CLI (`claude` on your PATH)
 - Python 3.x (used by the ui-ux-pro-max search script)
 
-## Configuration
-
-The `magic` MCP server needs an API key, read **only** from a `.env` file
-(which is gitignored and never committed). Set it up first:
-
-```bash
-cp .env.example .env      # Windows: Copy-Item .env.example .env
-```
-
-Then edit `.env` and set your real key:
-
-```
-MAGIC_API_KEY=your-magic-api-key-here
-```
-
-## Usage
-
-### Windows (PowerShell)
-
-```powershell
-git clone <this-repo-url>
-cd <repo>
-Copy-Item .env.example .env   # then edit .env with your key
-./install.ps1
-```
-
-### macOS / Linux / Git Bash
-
-```bash
-git clone <this-repo-url>
-cd <repo>
-cp .env.example .env          # then edit .env with your key
-chmod +x install.sh
-./install.sh
-```
-
-> ⚠️ **Security note:** The API key lives only in `.env`, which is gitignored.
-> Only `.env.example` (a placeholder) is committed to GitHub.
+> 🔒 The API key is only ever passed inline to `claude mcp add` and is never
+> written to disk or committed.
