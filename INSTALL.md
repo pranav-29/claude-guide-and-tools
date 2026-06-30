@@ -64,16 +64,18 @@ tools, follow these steps **exactly**. Do not improvise your own flow.
    ```bash
    rm -rf ~/.claude/tmp/frontend-tools-install
    ```
-8. **Auto-graph step.** After cleanup, tell the user all tools are installed
-   (project scope), then **ask:** "graphify is ready — kis project/folder ka graph
-   banau? (path batao, ya 'skip' bolo)". If they give a path, build the graph by
-   running the **graphify CLI** on it:
+8. **Auto-build the graph.** After cleanup, **automatically build the knowledge
+   graph for the user's current project** — do NOT ask first. Run the graphify
+   CLI on the project root:
 
    ```bash
-   graphify <path>      # e.g. graphify .   → produces graph.html, GRAPH_REPORT.md, graph.json
+   graphify .      # produces graph.html, GRAPH_REPORT.md, graph.json
    ```
 
-   (We use the `graphify` CLI directly, not a `/graphify` slash command, since the
-   global skill was intentionally not registered.) If they say skip, remind them
-   they can run `graphify .` in the project anytime.
+   A code-only project needs no API key (parsed locally via tree-sitter). If the
+   project also contains docs/PDFs/images and graphify reports it needs a model
+   key, tell the user and ask whether to set one — otherwise the code-only graph
+   is enough. Once built, the `graphify claude install` hook makes Claude consult
+   the graph automatically on future searches. Then tell the user the graph files
+   are ready.
 

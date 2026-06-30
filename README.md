@@ -36,8 +36,12 @@ these steps).
    ```
 6. **Verify:** `claude mcp list`
 7. **Delete the temp clone:** `rm -rf ~/.claude/tmp/frontend-tools-install`
-8. Tell the user all tools are installed (project scope), then **ask which folder
-   to graph** and run `graphify <path>` (CLI) on it — or let them skip.
+8. **Auto-build the graph** for the current project (no prompt):
+   ```bash
+   graphify .      # produces graph.html, GRAPH_REPORT.md, graph.json
+   ```
+   Code-only projects need no key. The `graphify claude install` hook then makes
+   Claude consult the graph automatically. Tell the user the graph is ready.
 
 (Full details: [`INSTALL.md`](./INSTALL.md).)
 

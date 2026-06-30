@@ -37,6 +37,11 @@ graphify claude install
 Write-Host "==> Adding the 'magic' MCP server to Claude Code (local scope)"
 claude mcp add magic --scope local --env API_KEY="$env:MAGIC_API_KEY" -- npx -y "@21st-dev/magic@latest"
 
-Write-Host "==> Done. Tools installed (project scope)."
+Write-Host "==> Tools installed (project scope)."
 
-Write-Host "==> Tip: run 'graphify .' in this project to build its graph (graph.html / GRAPH_REPORT.md / graph.json)."
+# --- 4. Auto-build the knowledge graph for the current project ------------
+# Code-only corpora need no API key (parsed locally via tree-sitter).
+Write-Host "==> Building knowledge graph for the current project (graphify .)"
+graphify .
+
+Write-Host "==> Done. Graph built: graph.html / GRAPH_REPORT.md / graph.json"

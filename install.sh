@@ -41,5 +41,11 @@ claude mcp add magic --scope local \
   --env API_KEY="$MAGIC_API_KEY" \
   -- npx -y @21st-dev/magic@latest
 
-echo "==> Done. Tools installed (project scope)."
-echo "==> Tip: run 'graphify .' in this project to build its graph (graph.html / GRAPH_REPORT.md / graph.json)."
+echo "==> Tools installed (project scope)."
+
+# --- 4. Auto-build the knowledge graph for the current project ------------
+# Code-only corpora need no API key (parsed locally via tree-sitter).
+echo "==> Building knowledge graph for the current project (graphify .)"
+graphify .
+
+echo "==> Done. Graph built: graph.html / GRAPH_REPORT.md / graph.json"
