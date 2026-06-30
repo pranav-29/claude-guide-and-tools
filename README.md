@@ -9,7 +9,9 @@
 
 ## 🤖 Instructions for Claude (follow exactly)
 
-When asked to install this repo, do **all** of the following, in order:
+Everything below is **project-scoped, never global**. Run all install commands in
+the **user's project directory** (not the temp clone, which is only for reading
+these steps).
 
 1. **Temp-clone into `.claude`** (NOT the current directory):
    ```bash
@@ -20,12 +22,12 @@ When asked to install this repo, do **all** of the following, in order:
    ```bash
    npx -y ui-ux-pro-max-cli init --ai claude
    ```
-3. **Install `graphify`** (CLI + skill, no key) + always-on Claude integration:
+3. **Install `graphify`** (CLI, no key) + **project-scoped** always-on integration:
    ```bash
    uv tool install graphifyy   # or: pipx install graphifyy / pip install graphifyy
-   graphify install            # register the /graphify skill
-   graphify claude install     # CLAUDE.md directive + PreToolUse hook (always-on)
+   graphify claude install     # project ./CLAUDE.md directive + PreToolUse hook
    ```
+   Do **NOT** run the global `graphify install` (it registers the skill in `~/.claude`).
 4. **Ask the user in chat** for their magic (21st.dev) API key. Do **NOT** create
    a `.env` file. Do **NOT** offer to store it in a file. Wait for their reply.
 5. **Add the `magic` MCP server** — local scope, **not user/global** — inline only:
@@ -34,8 +36,8 @@ When asked to install this repo, do **all** of the following, in order:
    ```
 6. **Verify:** `claude mcp list`
 7. **Delete the temp clone:** `rm -rf ~/.claude/tmp/frontend-tools-install`
-8. Tell the user all tools are installed, then **ask which folder to graph** and
-   run `/graphify <path>` on it (or let them skip).
+8. Tell the user all tools are installed (project scope), then **ask which folder
+   to graph** and run `graphify <path>` (CLI) on it — or let them skip.
 
 (Full details: [`INSTALL.md`](./INSTALL.md).)
 
@@ -46,7 +48,7 @@ When asked to install this repo, do **all** of the following, in order:
 | Tool | What it is | How it's installed |
 |------|-----------|--------------------|
 | [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | A Claude Code skill providing UI/UX design intelligence | `npx ui-ux-pro-max-cli init --ai claude` (project scope) |
-| [graphify](https://github.com/safishamsi/graphify) | CLI + Claude Code skill that turns a codebase into a queryable knowledge graph | `uv tool install graphifyy` → `graphify install` → `graphify claude install` (always-on) |
+| [graphify](https://github.com/safishamsi/graphify) | CLI that turns a codebase into a queryable knowledge graph | `uv tool install graphifyy` → `graphify claude install` (project scope, always-on) |
 | [magic](https://github.com/21st-dev/magic-mcp) | 21st.dev Magic MCP server for generating UI components | `claude mcp add magic --scope local ... npx @21st-dev/magic@latest` |
 
 ## Manual install (optional)

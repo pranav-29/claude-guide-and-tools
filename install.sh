@@ -29,10 +29,10 @@ elif command -v pipx >/dev/null 2>&1; then
 else
   pip install graphifyy
 fi
-# Register the /graphify skill
-graphify install
-# Always-on Claude Code integration: adds CLAUDE.md directive + PreToolUse hook
-# so Claude consults the knowledge graph before every Glob/Grep (project scope).
+# Project-scoped, always-on Claude integration: adds a CLAUDE.md directive +
+# PreToolUse hook in THIS project so Claude consults the knowledge graph before
+# every Glob/Grep. Writes only to the current project — no global ~/.claude.
+# (We intentionally skip the global `graphify install` skill registration.)
 graphify claude install
 
 # --- 3. magic MCP server (local scope — current project only) -------------
@@ -41,5 +41,5 @@ claude mcp add magic --scope local \
   --env API_KEY="$MAGIC_API_KEY" \
   -- npx -y @21st-dev/magic@latest
 
-echo "==> Done. Tools installed."
-echo "==> Tip: graphify is installed. Run '/graphify .' inside a project to build its graph."
+echo "==> Done. Tools installed (project scope)."
+echo "==> Tip: run 'graphify .' in this project to build its graph (graph.html / GRAPH_REPORT.md / graph.json)."
