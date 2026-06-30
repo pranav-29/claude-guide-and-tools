@@ -14,12 +14,11 @@ if (-not $env:MAGIC_API_KEY) {
 
 Write-Host "==> Frontend tools installer"
 
-# --- 1. ui-ux-pro-max skill ----------------------------------------------
-Write-Host "==> Installing ui-ux-pro-max skill (global, Claude Code)"
-npm install -g ui-ux-pro-max-cli
-uipro init --ai claude --global
+# --- 1. ui-ux-pro-max skill (project scope, into ./.claude/skills/) -------
+Write-Host "==> Installing ui-ux-pro-max skill (current project)"
+npx -y ui-ux-pro-max-cli init --ai claude
 
-# --- 2. graphify (CLI + skill) -------------------------------------------
+# --- 2. graphify (CLI + skill + always-on Claude integration) ------------
 Write-Host "==> Installing graphify (CLI + Claude Code skill)"
 if (Get-Command uv -ErrorAction SilentlyContinue) {
     uv tool install graphifyy
@@ -28,11 +27,15 @@ if (Get-Command uv -ErrorAction SilentlyContinue) {
 } else {
     pip install graphifyy
 }
+# Register the /graphify skill
 graphify install
+# Always-on Claude Code integration: adds CLAUDE.md directive + PreToolUse hook
+# so Claude consults the knowledge graph before every Glob/Grep (project scope).
+graphify claude install
 
-# --- 3. magic MCP server --------------------------------------------------
-Write-Host "==> Adding the 'magic' MCP server to Claude Code (user scope)"
-claude mcp add magic --scope user --env API_KEY="$env:MAGIC_API_KEY" -- npx -y "@21st-dev/magic@latest"
+# --- 3. magic MCP server (local scope — current project only) -------------
+Write-Host "==> Adding the 'magic' MCP server to Claude Code (local scope)"
+claude mcp add magic --scope local --env API_KEY="$env:MAGIC_API_KEY" -- npx -y "@21st-dev/magic@latest"
 
 Write-Host "==> Done. Tools installed."
 

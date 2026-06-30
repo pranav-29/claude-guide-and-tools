@@ -16,21 +16,21 @@ When asked to install this repo, do **all** of the following, in order:
    rm -rf ~/.claude/tmp/frontend-tools-install
    git clone --depth 1 https://github.com/pranav-29/claude-guide-and-tools.git ~/.claude/tmp/frontend-tools-install
    ```
-2. **Install the `ui-ux-pro-max` skill** (global):
+2. **Install the `ui-ux-pro-max` skill** — project scope, **not global**:
    ```bash
-   npm install -g ui-ux-pro-max-cli
-   uipro init --ai claude --global
+   npx -y ui-ux-pro-max-cli init --ai claude
    ```
-3. **Install `graphify`** (CLI + skill, no key needed):
+3. **Install `graphify`** (CLI + skill, no key) + always-on Claude integration:
    ```bash
    uv tool install graphifyy   # or: pipx install graphifyy / pip install graphifyy
-   graphify install
+   graphify install            # register the /graphify skill
+   graphify claude install     # CLAUDE.md directive + PreToolUse hook (always-on)
    ```
 4. **Ask the user in chat** for their magic (21st.dev) API key. Do **NOT** create
    a `.env` file. Do **NOT** offer to store it in a file. Wait for their reply.
-5. **Add the `magic` MCP server** with the key they pasted (inline only):
+5. **Add the `magic` MCP server** — local scope, **not user/global** — inline only:
    ```bash
-   claude mcp add magic --scope user --env API_KEY="<KEY_FROM_CHAT>" -- npx -y @21st-dev/magic@latest
+   claude mcp add magic --scope local --env API_KEY="<KEY_FROM_CHAT>" -- npx -y @21st-dev/magic@latest
    ```
 6. **Verify:** `claude mcp list`
 7. **Delete the temp clone:** `rm -rf ~/.claude/tmp/frontend-tools-install`
@@ -45,9 +45,9 @@ When asked to install this repo, do **all** of the following, in order:
 
 | Tool | What it is | How it's installed |
 |------|-----------|--------------------|
-| [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | A Claude Code skill providing UI/UX design intelligence | `ui-ux-pro-max-cli` → `uipro init --ai claude --global` |
-| [graphify](https://github.com/safishamsi/graphify) | CLI + Claude Code skill that turns a codebase into a queryable knowledge graph | `uv tool install graphifyy` → `graphify install` |
-| [magic](https://github.com/21st-dev/magic-mcp) | 21st.dev Magic MCP server for generating UI components | `claude mcp add magic ... npx @21st-dev/magic@latest` |
+| [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | A Claude Code skill providing UI/UX design intelligence | `npx ui-ux-pro-max-cli init --ai claude` (project scope) |
+| [graphify](https://github.com/safishamsi/graphify) | CLI + Claude Code skill that turns a codebase into a queryable knowledge graph | `uv tool install graphifyy` → `graphify install` → `graphify claude install` (always-on) |
+| [magic](https://github.com/21st-dev/magic-mcp) | 21st.dev Magic MCP server for generating UI components | `claude mcp add magic --scope local ... npx @21st-dev/magic@latest` |
 
 ## Manual install (optional)
 
